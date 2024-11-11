@@ -1,73 +1,73 @@
-# BudgetSage
+# BudgetSage - Personal Finance Categorizer and Analyzer
 
-Budget Sage - Smart Financial Categorization & Analysis with LLM
-TL;DR
-Budget Sage is a powerful tool that categorizes and analyzes your financial transactions using Large Language Model (LLM) capabilities. It imports CSV data into an SQLite database, auto-categorizes spending, and can prompt for user input when unsure about certain categories. Built with Python, SQLite, and Docker, it’s designed to automate financial insights while ensuring data privacy.
+## TL;DR
+**BudgetSage** is a Dockerized solution for categorizing and analyzing personal financial transactions. Using SQLite for data storage and a Hugging Face LLM for text classification, BudgetSage imports financial data from CSV files, categorizes expenses and incomes, and allows interactive querying of your finances. This project is fully automated for repeat use, allowing you to monitor your financial habits over time. Open-source and customizable.
 
-Why?
-Manual financial tracking and categorization is tedious. Budget Sage makes it seamless by combining LLM-based categorization with customizable keyword filters, enabling easy management of personal finances.
+---
 
-🔧 Tech Stack
-Python 3.10+: Core language for data processing.
-SQLite: Lightweight database to store and query transactions.
-Docker & Docker-Compose: Containerized setup for easy deployment.
-Transformers (Hugging Face): Utilizes "Nous-Hermes-2-Mistral-7B-DPO" for advanced text-based classification.
-🧠 What This Script Actually Does
-Budget Sage automatically:
+## Why?
+Tracking finances manually can be tedious. With BudgetSage, you can use AI to automatically categorize transactions and interact with your financial data in plain language.
 
-Imports financial transactions from a CSV file.
-Runs each transaction description through a categorization pipeline.
-Auto-categorizes based on pre-defined keywords and memory for recurring transactions.
-Prompts the user when categorization is unclear and remembers future preferences.
-Stores the categorized transactions in SQLite for easy querying and analysis.
-🚀 Setting It Up
-Clone the Repository
-First, clone the repository to your environment:
+---
 
-bash
-Code kopieren
-git clone https://github.com/yourusername/budget-sage.git
-cd budget-sage
-Install Dependencies
-Ensure you’re using Python 3.10+ and install necessary Python packages:
+## 🔧 Tech Stack
+- **Python 3.10**: Core runtime.
+- **SQLite**: Lightweight database to store transactions.
+- **Hugging Face Transformers**: Leverages a pre-trained LLM for categorization.
+- **Docker & Docker Compose**: Ensures isolated, reproducible environments.
 
-bash
-Code kopieren
-pip install -r requirements.txt
-Configure Environment
-Docker Configuration: Edit docker-compose.yml if you need to adjust any environment settings like memory or storage.
-WSL Configuration (for Windows): Ensure your WSL has sufficient memory allocated by editing .wslconfig in your user directory.
-Prepare CSV Files
-Place your CSV files with financial data in the data/csv_files folder. Ensure they follow the expected column structure.
+---
 
-Running the Script
-Use Docker to build and run the containers:
+## 🧠 What This Script Does
+- **Imports CSV Files**: Automatically imports transaction data from CSV files.
+- **Categorizes Transactions**: Uses a combination of keywords and an LLM model to assign categories.
+- **Interactive Categorization**: If uncertain, prompts the user to confirm categories, remembering preferences for future transactions.
+- **Stores Data in SQLite**: Data is saved to a database, allowing for easy querying and persistent storage.
 
-bash
-Code kopieren
+---
+
+## 🚀 Setting It Up
+
+### Clone the Repository
+```bash
+git clone https://github.com/yourusername/BudgetSage.git
+cd BudgetSage
+```
+
+Install Dependencies and Build Docker Containers
+```bash
 docker-compose up -d --build
-This will:
+```
 
-Build the SQLite and LLM containers.
-Automatically load your CSV data and start categorizing.
-To follow the logs:
+Folder Structure
+Ensure you have your CSV files in a csv_files directory within the data folder:
+```bash
+BudgetSage/
+├── data/
+│   ├── financial_data.db  # Auto-generated SQLite database
+│   └── csv_files/         # Place your CSV files here for automatic import
+└── ...
+```
 
-bash
-Code kopieren
-docker-compose logs -f llm
-⚙️ How It Works - Under the Hood
-Data Import: Imports CSV files into SQLite, skipping duplicates.
-Categorization: Combines LLM suggestions with user-defined keyword filtering.
-User Prompts: When uncertain, the LLM prompts you for confirmation.
-Persistent Memory: Remembers previous categorizations for consistent future labeling.
-📦 Project Files
-BudgetSage_Categories_0.1.py: Main script for categorizing transactions.
-requirements.txt: Lists dependencies.
-docker-compose.yml: Docker setup file.
-README.md: This file for setup instructions.
-.wslconfig: Windows memory configuration (optional).
-🌍 Contributing
-Want to improve or customize? Fork the repository, create a feature branch, and open a pull request.
+### ⚙️ How It Works - Under the Hood
+- Data Import: Reads CSV files placed in data/csv_files and stores transactions in SQLite.
+- Categorization: Assigns categories based on description keywords and an LLM for accurate classification.
+- Interactive Confirmation: Prompts you to confirm categories for ambiguous transactions.
+- Memory Storage: Remembers previous categorization choices to apply consistently over time.
+- Avoiding Duplicate Imports
+- To prevent re-importing the same data, BudgetSage generates a unique hash for each transaction row, ensuring only unique rows are stored.
 
-📝 License
-MIT License. Use, modify, and share freely, with attribution.
+### 📦 Project Files
+- BudgetSage_Categories.py: Handles categorization of transactions.
+- Dockerfile.llm: Sets up the LLM environment.
+- Dockerfile.sqlite: Sets up SQLite.
+- docker-compose.yml: Configures multi-container setup.
+- README.md: Project overview and setup instructions (this file).
+
+### 🌍 Contributing
+1. Fork the repository.
+2. Clone locally.
+3. Create a feature branch: git checkout -b feature-branch.
+4. Commit your changes.
+5. Push to your branch and create a Pull Request.
+
