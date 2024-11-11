@@ -1,0 +1,14 @@
+# Use a lightweight base image
+FROM alpine:latest
+
+# Install SQLite
+RUN apk add --no-cache sqlite
+
+# Set the working directory
+WORKDIR /data
+
+# Expose the volume for data sharing
+VOLUME /data
+
+# Start SQLite in interactive mode (or modify as needed for your scripts)
+CMD ["sqlite3"]

@@ -1,0 +1,30 @@
+version: '3'
+services:
+  sqlite:
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlite
+    container_name: budget_sqlite_container
+    networks:
+      - budget_network
+    volumes:
+      - ./local_data:/data  # Map the container's /data folder to a local directory on the host
+    command: ["tail", "-f", "/dev/null"]
+
+  llm:
+    build:
+      context: .
+      dockerfile: Dockerfile.llm
+    container_name: budget_llm_container
+    networks:
+      - budget_network
+    volumes:
+      - ./local_data:/data  # Map the same local directory to access the database
+      - C:/tools/BudgetSage/data/csv_files:/data/csv_files  # Mount csv_files folder
+    command: ["sh", "-c", "python /app/BudgetSage_0.1.py && tail -f /dev/null"]
+
+networks:
+  budget_network:
+
+volumes:
+  budget_data:

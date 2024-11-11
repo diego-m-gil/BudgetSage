@@ -1,0 +1,17 @@
+# Use a Python base image that includes pip
+FROM python:3.10
+
+# Set the working directory
+WORKDIR /app
+
+# Install necessary packages for LLM and data processing
+RUN pip install torch transformers pandas
+
+# Copy your application code into the container
+COPY . /app
+
+# Expose the volume for data sharing
+VOLUME /data
+
+# Set the entry point to run your Python script
+CMD ["python", "BudgetSage_0.1.py"]
